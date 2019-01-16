@@ -12,8 +12,26 @@ namespace PlayCards
         // establish index variable for traversing and manipulating collector array
         int current = 0;
 
-        //public object Current => throw new NotImplementedException();
+        private string _owner;
+        public string Owner
+        {
+            get { return _owner; }
+            set { _owner = value; }
+        }
 
+        /// <summary>
+        /// constructs a new deck
+        /// </summary>
+        /// <param name="owner"> deck owner's name </param>
+        public Deck(string owner)
+        {
+            _owner = owner;
+        }
+
+        /// <summary>
+        /// adds a specific card to a deck
+        /// </summary>
+        /// <param name="cardToAdd"> the card to add </param>
         public void Add(T cardToAdd)
         {
             if (current > deckContents.Length-2) // extend array BEFORE it's completely full
@@ -24,6 +42,10 @@ namespace PlayCards
             current++;
         }
 
+        /// <summary>
+        /// removes a specific card from a deck
+        /// </summary>
+        /// <param name="cardToRemove"> the card to remove </param>
         public void Remove(int cardToRemove)
         {
             for (int i = cardToRemove; i < current; i++)
@@ -36,7 +58,12 @@ namespace PlayCards
             current--;
         }
 
-        public int Count(Deck<T> deckToCount)
+        /// <summary>
+        /// returns the count of cards in a deck
+        /// uses the 'current' index (since there are no empties in the deck)
+        /// </summary>
+        /// <returns> number of cards in the deck </returns>
+        public int Count()
         {
             return current + 1;
         }

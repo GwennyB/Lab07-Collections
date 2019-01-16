@@ -22,7 +22,7 @@ namespace PlayCards
         Queen = 12,
         King = 13
     };
-    enum CardColor { Red, Black } // derived from Suit
+    public enum CardColor { Red, Black } // derived from Suit
 
     public class Card
     {
