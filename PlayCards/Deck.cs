@@ -24,7 +24,7 @@ namespace PlayCards
             set { _owner = value; }
         }
 
-        public int DeckSize
+        public int DeckSize // starting deck size
         {
             get { return _deckSize; }
             set { _deckSize = value; }
@@ -58,16 +58,19 @@ namespace PlayCards
         /// removes a specific card from a deck
         /// </summary>
         /// <param name="cardToRemove"> the card to remove </param>
-        public void Remove(int cardToRemove)
+        public bool Remove(T cardToRemove)
         {
-            for (int i = cardToRemove; i < current; i++)
+
+            for (int i = deckContents.Length; i < current; i++)
             {
                 if ( cardToRemove.Equals(deckContents[i]))
                 {
                     deckContents[i] = deckContents[current-1];
+                    current--;
+                    return true;
                 }
             }
-            current--;
+            return false;
         }
 
         /// <summary>
@@ -77,7 +80,17 @@ namespace PlayCards
         /// <returns> number of cards in the deck </returns>
         public int Count()
         {
-            return current + 1;
+            return current;
+        }
+
+        /// <summary>
+        /// Selects and returns a random card in deck
+        /// </summary>
+        /// <returns> randomly selected card </returns>
+        public T SelectRandom()
+        {
+            Random random = new Random();
+            return deckContents[random.Next(Count())];
         }
 
 
