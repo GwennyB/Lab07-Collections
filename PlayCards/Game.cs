@@ -9,7 +9,8 @@ namespace PlayCards
         // backing stores
         int _cardsPerPlayer = 0;
 
-        public int Hand
+        // game properties
+        public int Hand // qty of cards dealt in a hand (user defined)
         {
             get { return _cardsPerPlayer; }
             set
@@ -25,6 +26,10 @@ namespace PlayCards
             }
         }
 
+        /// <summary>
+        /// constructs a new Game object
+        /// </summary>
+        /// <param name="cardsPerPlayer"> qty of cards to deal to each player for this game </param>
         public Game(int cardsPerPlayer)
         {
             Hand = cardsPerPlayer;

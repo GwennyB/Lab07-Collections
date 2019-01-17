@@ -13,41 +13,50 @@ namespace PlayCards
             // gameDecks[0] = Dealer
             // gameDecks[1] = PlayerOne
             // gameDecks[2] = PlayerTwo
-            Console.WriteLine("Full deck contains:");
+            Console.Clear();
             PrintDeck(gameDecks[0]);
             Console.ReadLine();
             Console.Clear();
 
-            Console.WriteLine($"Dealing {game.Hand} to each player...");
+            Console.WriteLine($"Dealing {game.Hand} to each player...\n");
             gameDecks = Deal(game, gameDecks);
 
             Console.ReadLine();
+            Console.Clear();
 
         }
 
-
+        /// <summary>
+        /// get deal quantity from user and build Game object
+        /// </summary>
+        /// <returns> new Game object </returns>
         public static Game Setup()
         {
-            Console.WriteLine("\nHow many cards shall I deal to each player? (max: 26)");
-            string howManyCards = Console.ReadLine();
             int cardsToDeal = 0;
-            try
+            while(cardsToDeal<1 || cardsToDeal > 26)
             {
-                cardsToDeal = Convert.ToInt32(howManyCards);
+                Console.WriteLine("\nHow many cards shall I deal to each player? (from 1 to 26)");
+                string howManyCards = Console.ReadLine();
+                try
+                {
+                    cardsToDeal = Convert.ToInt32(howManyCards);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Exception caught: {e.ToString()}");
+                }
             }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Exception caught: {e.ToString()}");
-            }
-            if (cardsToDeal > 26)
-            {
-                Console.WriteLine("\nThat's too many! Dealing the full deck instead...");
-            }
+
             Game game = new Game(cardsToDeal);
 
             return game;
         }
 
+        /// <summary>
+        /// builds dealer deck (full) and player decks (empty
+        /// </summary>
+        /// <param name="game"> game object </param>
+        /// <returns> array of initial decks </returns>
         public static Deck<Card>[] BuildDecks(Game game)
         {
             Deck<Card> Dealer = game.BuildFullDeck();
@@ -57,6 +66,12 @@ namespace PlayCards
             return new[] { Dealer, PlayerOne, PlayerTwo };
         }
 
+        /// <summary>
+        /// moves indicated number of random cards from dealer to players
+        /// </summary>
+        /// <param name="game"> game object </param>
+        /// <param name="gameDecks"> dealer and player decks </param>
+        /// <returns></returns>
         public static Deck<Card>[] Deal(Game game, Deck<Card>[] gameDecks)
         {
             Card placeholder;
@@ -74,8 +89,13 @@ namespace PlayCards
             return gameDecks;
         }
 
-
-
+        /// <summary>
+        /// moves a selected card from one deck to another
+        /// </summary>
+        /// <param name="cardToMove"> card to move between decks </param>
+        /// <param name="moveFrom"> deck to surrender card </param>
+        /// <param name="moveTo"> deck to add card </param>
+        /// <returns> confirmation of card move </returns>
         public static bool MoveCard(Card cardToMove, Deck<Card> moveFrom, Deck<Card> moveTo)
         {
             if (moveFrom.Remove(cardToMove))
@@ -93,7 +113,7 @@ namespace PlayCards
         /// <param name="deck"> the deck to be printed </param>
         public static void PrintDeck(Deck<Card> deck)
         {
-            Console.WriteLine($"{deck.Owner}'s deck contains {deck.Count()} cards:");
+            Console.WriteLine($"\n{deck.Owner}'s deck contains {deck.Count()} cards:");
 
             foreach (Card card in deck)
             {
