@@ -6,28 +6,29 @@ namespace PlayCards
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Start play!\n");
             Game game = Setup();
-            Deck<Card> Dealer = game.BuildFullDeck();
-            PrintDeck(Dealer);
-            Deck<Card> PlayerOne = new Deck<Card>("Player 1", game.Hand);
-            PrintDeck(PlayerOne);
-            Deck<Card> PlayerTwo = new Deck<Card>("Player 2", game.Hand);
-            PrintDeck(PlayerTwo);
-            Deck<Card>[] gameDecks = { Dealer, PlayerOne, PlayerTwo };
 
-            gameDecks = Deal(game, gameDecks);
-            //Console.WriteLine($"Dealer: {Dealer.Count()}");
-            //Console.WriteLine($"P1: {PlayerOne.Count()}");
-            //Console.WriteLine($"P2: {PlayerTwo.Count()}");
-            //PrintDeck(game.PlayerOne);
-            //PrintDeck(game.PlayerTwo);
+            Deck<Card>[] gameDecks = BuildDecks(game);
+            // gameDecks[0] = Dealer
+            // gameDecks[1] = PlayerOne
+            // gameDecks[2] = PlayerTwo
+            Console.WriteLine("Full deck contains:");
+            PrintDeck(gameDecks[0]);
             Console.ReadLine();
+            Console.Clear();
+
+            Console.WriteLine($"Dealing {game.Hand} to each player...");
+            gameDecks = Deal(game, gameDecks);
+
+            Console.ReadLine();
+
         }
 
 
         public static Game Setup()
         {
-            Console.WriteLine("How many cards shall I deal to each player? (max: 26)");
+            Console.WriteLine("\nHow many cards shall I deal to each player? (max: 26)");
             string howManyCards = Console.ReadLine();
             int cardsToDeal = 0;
             try
@@ -38,11 +39,23 @@ namespace PlayCards
             {
                 Console.WriteLine($"Exception caught: {e.ToString()}");
             }
+            if (cardsToDeal > 26)
+            {
+                Console.WriteLine("\nThat's too many! Dealing the full deck instead...");
+            }
             Game game = new Game(cardsToDeal);
 
             return game;
         }
 
+        public static Deck<Card>[] BuildDecks(Game game)
+        {
+            Deck<Card> Dealer = game.BuildFullDeck();
+            Deck<Card> PlayerOne = new Deck<Card>("Player 1", game.Hand);
+            Deck<Card> PlayerTwo = new Deck<Card>("Player 2", game.Hand);
+            Deck<Card>[] gameDecks = { Dealer, PlayerOne, PlayerTwo };
+            return new[] { Dealer, PlayerOne, PlayerTwo };
+        }
 
         public static Deck<Card>[] Deal(Game game, Deck<Card>[] gameDecks)
         {
@@ -68,6 +81,7 @@ namespace PlayCards
             if (moveFrom.Remove(cardToMove))
             {
                 moveTo.Add(cardToMove);
+                Console.WriteLine($"moved {cardToMove.Rank} of {cardToMove.Suit} from {moveFrom.Owner} to {moveTo.Owner}.");
                 return true;
             }
             return false;
@@ -83,7 +97,7 @@ namespace PlayCards
 
             foreach (Card card in deck)
             {
-                Console.WriteLine($"   {card.Rank} of {card.Suit}");
+                Console.WriteLine($"  {card.Rank} of {card.Suit} ");
             }
             Console.WriteLine();
         }
