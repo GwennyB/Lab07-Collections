@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PlayCards
 {
-    class Deck<T> : IEnumerable<T>
+    public class Deck<T> : IEnumerable<T>
     {
         // backing stores for deck properties
         int _deckSize = 0;
