@@ -52,8 +52,7 @@ namespace PlayCards
                 for (int j = 1; j <= 2; j++)
                 {
                     placeholder = gameDecks[0].SelectRandom();
-                    gameDecks[j].Add(placeholder);
-                    gameDecks[0].Remove(placeholder);
+                    MoveCard(placeholder, gameDecks[0], gameDecks[j]);
                 }
             }
             PrintDeck(gameDecks[0]);
@@ -64,7 +63,7 @@ namespace PlayCards
 
 
 
-        public bool MoveCard(Card cardToMove, Deck<Card> moveFrom, Deck<Card> moveTo)
+        public static bool MoveCard(Card cardToMove, Deck<Card> moveFrom, Deck<Card> moveTo)
         {
             if (moveFrom.Remove(cardToMove))
             {

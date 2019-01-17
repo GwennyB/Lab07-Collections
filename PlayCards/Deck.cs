@@ -61,7 +61,7 @@ namespace PlayCards
         public bool Remove(T cardToRemove)
         {
 
-            for (int i = deckContents.Length; i < current; i++)
+            for (int i = 0;  i < current; i++)
             {
                 if ( cardToRemove.Equals(deckContents[i]))
                 {
