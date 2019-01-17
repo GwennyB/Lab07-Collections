@@ -9,6 +9,11 @@ namespace PlayCards
             Deck<Card> dealer = BuildFullDeck("Dealer");
             PrintDeck(dealer);
             Console.ReadLine();
+
+            Console.WriteLine("How many cards shall I deal?");
+            string howManyCards = Console.ReadLine();
+            Deck<Card> playerOne = new Deck<Card>("Player 1", Convert.ToInt32(howManyCards));
+            Deck<Card> playerTwo = new Deck<Card>("Player 2", Convert.ToInt32(howManyCards));
         }
 
         /// <summary>
@@ -18,7 +23,7 @@ namespace PlayCards
         /// <returns> fully built deck of cards </returns>
         static Deck<Card> BuildFullDeck(string owner)
         {
-            Deck<Card> deck = new Deck<Card>(owner);
+            Deck<Card> deck = new Deck<Card>(owner, 52);
 
             foreach (CardSuit suit in Enum.GetValues(typeof(CardSuit)))
             {
@@ -44,6 +49,19 @@ namespace PlayCards
             }
             Console.WriteLine();
         }
+
+        static Deck<Card>[] Deal(int hand)
+        {
+            // loop to 'hand'
+            // MOVE CARD:
+            // choose a random card from dealer's deck
+            // add card to p1
+            // delete card from p1
+            // MOVE CARD dealer to p2
+
+        }
+
+        static 
 
     }
 }

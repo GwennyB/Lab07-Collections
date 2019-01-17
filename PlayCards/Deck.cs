@@ -7,25 +7,37 @@ namespace PlayCards
 {
     class Deck<T> : IEnumerable<T>
     {
+        // backing stores for deck properties
+        int _deckSize = 0;
+        private string _owner;
+
         // establish collector array, initially 5 card slots
-        T[] deckContents = new T[5];
+        T[] deckContents = new T[0];
+
         // establish index variable for traversing and manipulating collector array
         int current = 0;
 
-        private string _owner;
+        // deck properties
         public string Owner
         {
             get { return _owner; }
             set { _owner = value; }
         }
 
+        public int DeckSize
+        {
+            get { return _deckSize; }
+            set { _deckSize = value; }
+        }
+
         /// <summary>
         /// constructs a new deck
         /// </summary>
         /// <param name="owner"> deck owner's name </param>
-        public Deck(string owner)
+        public Deck(string owner, int deckSize)
         {
             _owner = owner;
+            _deckSize = deckSize;
         }
 
         /// <summary>
